@@ -114,7 +114,7 @@ class ServerManager:
             "created_date": f"{today}",
             "expire_date": f"{expire_date}"
         })
-        vless_config = f"""vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=ws&sni=zoom.us#{name}-Hora-Pusa-VPN"""
+        vless_config = f"""vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=ws&sni=t.co#{name}-KingSahan VPN"""
         with open('/usr/local/etc/xray/config.json', 'w') as json_write:
             json.dump(json_file, json_write)
         os.system("sudo service xray restart")
@@ -189,7 +189,7 @@ server_manager = ServerManager()
 
 def start(update: Update, context: CallbackContext):
     if update.message.chat.id == sudo:
-        update.message.reply_text("""Hello sir, Welcome to the Hora_Pusa-server-manager-bot.
+        update.message.reply_text("""Hello sir, Welcome to the King_Sahan-server-manager-bot.
     Please write
     /help to see the commands available.""")
 
