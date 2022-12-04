@@ -114,7 +114,7 @@ class ServerManager:
             "created_date": f"{today}",
             "expire_date": f"{expire_date}"
         })
-        vless_config = f"""vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=ws&sni=t.co#{name}-KingSahan VPN"""
+        vless_config = f"""vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=ws&sni=t.co#{name} {expire_date} KS VPN"""
         with open('/usr/local/etc/xray/config.json', 'w') as json_write:
             json.dump(json_file, json_write)
         os.system("sudo service xray restart")
@@ -179,7 +179,7 @@ class ServerManager:
 Name : {name}
 Created date : {created_date}    
 Expire date : {expire_date}
-Config text : vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=ws&sni=zoom.us#{name}-Hora-Pusa-VPN""")
+Config text : vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=ws&sni=t.co#{name} {expire_date} KS VPN""")
             uuid_index += 1
         return config_list
 
