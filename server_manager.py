@@ -30,7 +30,7 @@ class ServerManager:
         else:
             return False
 
-    def create_new_config(self, name, valid_dates):
+    def create_new_config(self, name, valid_dates, vpn_host):
         """ creates new vless config file
         :param name: user input as string
         :param valid_dates: vaild days required as int value
@@ -54,7 +54,7 @@ class ServerManager:
             "created_date": f"{today}",
             "expire_date": f"{expire_date}"
         })
-        vless_config = f"""vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=ws&sni=zoom.us#{name}-Hora-Pusa-VPN"""
+        vless_config = f"""vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=ws&sni={vpn_host}#{name} {expire_date} KS VPN"""
         with open('/usr/local/etc/xray/config.json', 'w') as json_write:
             json.dump(json_file, json_write)
         subprocess.run("sudo service xray restart", shell=True)
@@ -118,9 +118,10 @@ class ServerManager:
             expire_date = json_file["inbounds"][0]["settings"]["clients"][uuid_index]["expire_date"]
             config_list.append(f"""Config : {uuid_index}
 Name : {name}
+Host : {vpn_host}
 Created date : {created_date}    
 Expire date : {expire_date}
-Config text : vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=ws&sni=zoom.us#{name}-Hora-Pusa-VPN""")
+Config text : vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=ws&sni={vpn_host}#{name} {expire_date} KS VPN""")
 
             uuid_index += 1
         return config_list
@@ -128,34 +129,9 @@ Config text : vless://{uuid}@{public_ip}:443?security=tls&encryption=none&type=w
 
 server_manager = ServerManager()
 def pannel():
-    print(f"""¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶11111111¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶11111111111¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶¶¶¶11111111111111111111¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶1111111111111111111111111¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶1111111¶¶¶¶¶¶¶¶111¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶11111111¶¶¶111¶¶¶¶¶¶¶1111111¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶1111111111¶¶¶1111111111111111111¶¶¶¶¶¶¶¶¶¶
-¶¶¶111111111111¶¶¶¶1111111111¶¶¶¶¶¶1¶¶¶¶¶1¶¶¶
-¶¶111111111111111111111111111¶¶111111111111¶¶
-¶¶111111111111111111111111111111111111111111¶
-¶1111¶¶¶¶1111111111111111111111111111111111¶¶
-¶11¶¶¶¶¶111111111111111111111111111¶¶¶¶¶¶11¶¶
-¶1¶¶¶¶¶111111111111111111111111111¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶11111111111¶11111111111111¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶111111111111¶¶1111111111111¶¶¶¶¶¶¶¶1¶¶¶
-¶¶¶¶¶¶1111111111111¶¶¶111111111111¶¶¶¶¶11¶¶¶¶
-¶¶¶¶¶¶1111111¶¶¶11111¶¶¶¶111111111111111¶¶¶¶¶
-¶¶¶¶¶¶11111¶¶¶¶¶11111111¶¶¶¶¶¶¶¶¶¶¶¶111¶¶¶¶¶¶
-¶¶¶¶¶¶111¶¶¶¶¶¶¶11111111¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶1¶¶¶¶¶¶¶¶¶11111¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶1111¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶11¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶1¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
+    print(f"""
 
-Welcome to horapusa server manager.
+Welcome to ks server manager.
 1. Create new v2ray config.
 2. Delete v2ray config.
 3. List all v2ray configs.
@@ -170,7 +146,8 @@ Welcome to horapusa server manager.
     if command == 1:
         name = input("Enter Name : ")
         valid_dates = int(input("Enter valid days : "))
-        new_config = server_manager.create_new_config(name, valid_dates)
+        vpn_host = input("Enter host : ")
+        new_config = server_manager.create_new_config(name, valid_dates, vpn_host)
         print(new_config)
     elif command == 2:
         config_index = int(input("Enter the config number to delete : "))
