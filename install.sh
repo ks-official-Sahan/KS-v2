@@ -7,8 +7,8 @@ apt install git
 apt install python3
 apt install python3-pip
 #Install my script
-git clone https://github.com/horapusa-lk/hp-v2
-cd hp-v2
+git clone https://github.com/ks-official-Sahan/KS-v2
+cd KS-v2
 chmod +x *
 pip3 install -r requirements.txt
 
